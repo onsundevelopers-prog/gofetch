@@ -1,0 +1,7 @@
+{
+  "name": "Go Fetch",
+  "description": "A beautiful, hexagonal habit tracking app with calming characters and productive vibes.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
