@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #FAF8F3;
+    /* Warm Cream */
+    --bg-secondary: #FFFFFF;
+    --text-primary: #3E3832;
+    /* Warm Dark Brown */
+    --text-secondary: #8B7E74;
+    /* Muted Brown */
+    --accent: #9B8B7E;
+    /* Soft Taupe */
+    --border: #E8E3DB;
+    /* Light Beige */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Instrument Serif', serif;
+    --momentum-gradient: linear-gradient(90deg, #8B7E74 0%, #A89F94 100%);
+  }
+
+  * {
+    @apply border-black/5;
+  }
+
+  body {
+    @apply text-[var(--text-primary)] antialiased selection:bg-emerald-100 selection:text-emerald-900;
+    background: var(--bg-primary);
+    background-image:
+      radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.01) 0, transparent 50%),
+      radial-gradient(at 50% 0%, rgba(59, 130, 246, 0.01) 0, transparent 50%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3 baseFrequency='0.65' %3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-blend-mode: overlay;
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+    user-select: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-serif {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    @apply text-6xl md:text-8xl;
+  }
+}
+
+@layer utilities {
+  /* 200M App Premium Utilities */
+
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0, 0, 0, 0.04)];
+  }
+
+  .premium-shadow {
+    @apply shadow-[0_20px_50px_rgba(0, 0, 0, 0.1)];
+  }
+
+  .card {
+    @apply bg-white rounded-[2rem] p-8 border border-black/[0.02] shadow-[0_4px_24px_rgba(0, 0, 0, 0.02)];
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card:hover {
+    @apply shadow-[0_20px_60px_rgba(0, 0, 0, 0.06)] -translate-y-1 border-black/[0.05];
+  }
+
+  .btn-primary {
+    @apply bg-black text-white px-8 py-5 rounded-2xl font-bold text-[10px] uppercase tracking-[0.2em] transition-all inline-flex items-center justify-center gap-3 active:scale-95 hover:bg-zinc-800 shadow-xl;
+  }
+
+  .input {
+    @apply w-full bg-black/[0.01] border border-black/[0.05] rounded-2xl px-6 py-5 text-xl font-serif outline-none transition-all placeholder:text-black/5 focus:bg-white focus:border-black/10 focus:shadow-lg;
+  }
+
+  .momentum-bar {
+    @apply overflow-hidden rounded-full;
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .momentum-fill {
+    @apply h-full rounded-full transition-all duration-1000 ease-out;
+    background: var(--momentum-gradient);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+
+  /* Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-fade-in {
+    animation: fade-in 1.8s ease-out;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+}

@@ -1,0 +1,44 @@
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useUser, SignedIn, SignedOut } from '@clerk/clerk-react';
+
+// Simplified Views
+const MockLanding = () => <div className="p-20 text-center"><h1>Landing</h1><p>If you see this, Auth is working.</p></div>;
+const MockDashboard = () => <div className="p-20 text-center"><h1>Dashboard</h1><p>You are Signed In!</p></div>;
+
+const App: React.FC = () => {
+  const { isLoaded, isSignedIn } = useUser();
+
+  console.log("App Rendering - isLoaded:", isLoaded, "isSignedIn:", isSignedIn);
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-[#F2E9DE] flex items-center justify-center">
+        <div className="text-2xl font-serif">Loading auth...</div>
+      </div>
+    );
+  }
+
+  return (
+    <Router>
+      <div className="min-h-screen bg-[#F2E9DE]">
+        <SignedOut>
+          <Routes>
+            <Route path="/" element={<MockLanding />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </SignedOut>
+
+        <SignedIn>
+          <Routes>
+            <Route path="/" element={<MockDashboard />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </SignedIn>
+      </div>
+    </Router>
+  );
+};
+
+export default App;

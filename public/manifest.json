@@ -1,0 +1,22 @@
+{
+    "name": "Go Fetch - No Excuses",
+    "short_name": "Fetch",
+    "description": "The only productivity app that pokes back.",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#F2E9DE",
+    "theme_color": "#F2E9DE",
+    "icons": [
+        {
+            "src": "dog-icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
