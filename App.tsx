@@ -178,7 +178,7 @@ const App: React.FC = () => {
               <Route path="/trial" element={<Trial onUpgrade={(plan) => { console.log(`Upgrading to ${plan}`); setShowPaywall(false); }} onClose={() => { }} />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-            <Tutorial />
+            <Tutorial userId={appUser.id} />
           </Layout>
         ) : (
           <Routes>

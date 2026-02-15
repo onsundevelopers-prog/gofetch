@@ -174,11 +174,15 @@ export const analyzeDay = async (reflection: string, energy: number, mood: strin
       "text": "Your blunt markdown analysis",
       "score": <0-100>,
       "didTodayCount": <true/false>,
-      "schedule": [...]
+      "schedule": [
+        {"start": "06:00", "title": "Deep Work / Mission", "type": "MISSION"},
+        {"start": "07:00", "title": "Physical Training", "type": "STRENGTH"},
+        ... and so on until 20:00
+      ]
     }
   `;
 
-  const system = "You are an expert productivity coach and behavioral psychologist. Provide detailed, personalized analysis. Return ONLY valid JSON.";
+  const system = "You are COACH. You are a judge of integrity. You provide blunt, action-oriented analysis. Return ONLY valid JSON.";
 
   if (GEMINI_KEY && genAI) {
     try {
@@ -216,9 +220,9 @@ export const analyzeDay = async (reflection: string, energy: number, mood: strin
 
   // Fallback with more detailed local analysis
   const baseScore = 40 + (energy * 10) + (habits.filter(h => h.completed).length * 5);
-  const didTodayCountFallback = baseScore > 60; // Simple logic for fallback
+  const didTodayCountFallback = baseScore > 60;
   return {
-    text: `**Overall Assessment**\n\nBased on your reflection and ${habitCompletionRate.toFixed(0)}% habit completion rate, you're making progress. Your energy level of ${energy}/5 suggests ${energy >= 4 ? 'strong momentum' : energy >= 3 ? 'steady effort' : 'you might need more rest'}.\n\n**Key Insights**\n\n- You completed ${habits.filter(h => h.completed).length} out of ${habits.length} habits today\n- Your mood (${mood}) ${mood.toLowerCase().includes('good') || mood.toLowerCase().includes('great') ? 'indicates positive momentum' : 'suggests room for improvement'}\n- ${goals.length > 0 ? `You're working toward ${goals.length} active goal(s)` : 'Consider setting some goals to give your habits more purpose'}\n\n**Recommendations**\n\n1. ${incompleteHabits ? `Focus on completing: ${incompleteHabits}` : 'Great job completing all habits!'}\n2. ${energy < 3 ? 'Prioritize rest and recovery' : 'Maintain your current energy with good sleep'}\n3. Reflect on how today's actions moved you closer to your goals\n\n**Keep Going!**\n\nEvery day is a step forward. ${habitCompletionRate >= 70 ? 'Your consistency is impressive!' : 'Small improvements compound over time.'} Stay focused on your journey.`,
+    text: `**Overall Assessment**\n\nBased on your reflection and ${habitCompletionRate.toFixed(0)}% habit completion rate, you're making progress. Your energy level of ${energy}/5 suggests ${energy >= 4 ? 'strong momentum' : energy >= 3 ? 'steady effort' : 'you might need more rest'}.\n\n(AI Connection Lost - Manual backup score generated)`,
     score: Math.min(100, baseScore),
     didTodayCount: didTodayCountFallback,
     schedule: []
@@ -240,13 +244,49 @@ export const generateInitialPlan = async (role: string, pain: string) => {
     {
       "message": "A blunt, high-standard assessment of their situation.",
       "habits": ["Habit 1", "Habit 2", "Habit 3"],
-      "schedule": [...]
+      "schedule": [
+        {"start": "06:00", "title": "Priority Mission", "type": "MISSION"},
+        {"start": "07:00", "title": "Deep Work", "type": "WORK"}
+      ]
     }
+    Generate the full list from 06:00 to 20:00 with no gaps.
   `;
 
   const system = "You are COACH. You build missions for winners. Return ONLY valid JSON.";
 
-  // ... rest of the logic
+  if (GEMINI_KEY && genAI) {
+    try {
+      const model = genAI.getGenerativeModel({
+        model: "gemini-1.5-flash",
+        generationConfig: { responseMimeType: "application/json" }
+      });
+      const result = await model.generateContent(system + "\n" + prompt);
+      const response = JSON.parse(result.response.text());
+      return response;
+    } catch (e) {
+      console.warn("Gemini init plan failed, trying Groq", e);
+    }
+  }
+
+  if (GROQ_KEY) {
+    try {
+      const raw = await fetchGroq(prompt, [], system, true);
+      return JSON.parse(raw);
+    } catch (e) {
+      console.error("Groq init plan failed", e);
+    }
+  }
+
+  // Fallback
+  return {
+    message: "I couldn't reach the server, but the standard remains high. Focus on your discipline.",
+    habits: ["Morning Audit", "Deep Work Session", "Physical Training"],
+    schedule: [
+      { start: "06:00", title: "Wake & Audit", type: "MISSION" },
+      { start: "08:00", title: "Deep Work", type: "WORK" },
+      { start: "17:00", title: "Physical Training", type: "STRENGTH" }
+    ]
+  };
 };
 
 export const auditGoal = async (goalTitle: string, description: string) => {

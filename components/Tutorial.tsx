@@ -79,24 +79,27 @@ const STEPS: Step[] = [
     }
 ];
 
-export const Tutorial: React.FC = () => {
+export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
     const [currentStepIndex, setCurrentStepIndex] = useState<number | null>(null);
     const [targetRect, setTargetRect] = useState<DOMRect | null>(null);
     const navigate = useNavigate();
     const location = useLocation();
     const tutorialRef = useRef<HTMLDivElement>(null);
 
+    const storageKey = userId ? `tutorial_completed_${userId}` : 'tutorial_completed_guest';
+
     useEffect(() => {
         // Force reset for this update so the user sees the new tutorial content
         const lastVersion = localStorage.getItem('tutorial_version');
-        const currentVersion = '2.0'; // New version with better instructions
+        const currentVersion = '2.1'; // New version with per-user tracking
 
         if (lastVersion !== currentVersion) {
-            localStorage.removeItem('tutorial_completed');
             localStorage.setItem('tutorial_version', currentVersion);
+            // We don't necessarily want to wipe all user tutorial states, 
+            // but we want to make sure the current one is triggered if it's the first time for this version.
             setCurrentStepIndex(0);
         } else {
-            const isCompleted = localStorage.getItem('tutorial_completed');
+            const isCompleted = localStorage.getItem(storageKey);
             if (!isCompleted) {
                 setCurrentStepIndex(0);
             }
@@ -104,10 +107,10 @@ export const Tutorial: React.FC = () => {
 
         // Expose restart function globally (used in Layout.tsx)
         (window as any).restartTutorial = () => {
-            localStorage.removeItem('tutorial_completed');
+            localStorage.removeItem(storageKey);
             setCurrentStepIndex(0);
         };
-    }, []);
+    }, [userId, storageKey]);
 
     useEffect(() => {
         if (currentStepIndex === null) return;
@@ -182,7 +185,7 @@ export const Tutorial: React.FC = () => {
 
     const handleSkip = () => {
         setCurrentStepIndex(null);
-        localStorage.setItem('tutorial_completed', 'true');
+        localStorage.setItem(storageKey, 'true');
     };
 
     if (currentStepIndex === null) return null;

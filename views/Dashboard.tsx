@@ -301,6 +301,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
             </div>
           </div>
           <button
+            id="audit-button"
             onClick={handleLogSubmit}
             className="w-full py-4 bg-black text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors disabled:opacity-50"
             disabled={!dailyLog.trim() || isGeneratingReport}
