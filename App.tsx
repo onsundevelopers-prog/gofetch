@@ -11,6 +11,7 @@ import { Analytics } from './views/Analytics';
 import { Trial } from './views/Trial';
 import { Plan } from './views/Plan';
 import { Potential } from './views/Potential';
+import { Tutorial } from './components/Tutorial';
 import { useNotifications } from './hooks/useNotifications';
 import { useGuiltMechanic } from './hooks/useGuiltMechanic';
 
@@ -177,6 +178,7 @@ const App: React.FC = () => {
               <Route path="/trial" element={<Trial onUpgrade={(plan) => { console.log(`Upgrading to ${plan}`); setShowPaywall(false); }} onClose={() => { }} />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
+            <Tutorial />
           </Layout>
         ) : (
           <Routes>

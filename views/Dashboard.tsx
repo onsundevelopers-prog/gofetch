@@ -39,6 +39,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
   const [newHabitUnit, setNewHabitUnit] = useState('');
 
   const [dailyLog, setDailyLog] = useState('');
+  const [energyLevel, setEnergyLevel] = useState<number>(3);
   const [didTodayCount, setDidTodayCount] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
@@ -183,7 +184,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
     try {
       const result = await analyzeDay(
         dailyLog,
-        3, // Default energy for now
+        energyLevel,
         "Steady", // Default mood
         goals || [],
         habits || []
@@ -215,7 +216,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
         await saveDailyLogMutation({
           userId: user.id,
           date: new Date().toISOString().split('T')[0],
-          energy: 3,
+          energy: energyLevel,
           mood: "Steady",
           reflection: dailyLog,
           productivityScore: result.score,
@@ -270,7 +271,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
       </header>
 
       {/* Reflection - Moved to Top */}
-      <section className="space-y-6">
+      <section id="reflection-section" className="space-y-6">
         <div className="space-y-1">
           <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/30">Daily Reflection</h2>
           <p className="text-[8px] font-bold uppercase tracking-widest text-black/10">Reflect on your day to calculate your final momentum score.</p>
@@ -282,6 +283,23 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
             placeholder="Write about what you achieved today. Be honest with yourself."
             className="w-full bg-transparent border-none outline-none resize-none text-base leading-relaxed min-h-[120px] placeholder:text-black/10 font-serif"
           />
+
+          <div className="flex flex-col gap-4 py-4 border-y border-black/[0.03]">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-black/30">Energy Level</span>
+              <div className="flex gap-2">
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setEnergyLevel(num)}
+                    className={`w-8 h-8 rounded-full text-[10px] font-bold transition-all ${energyLevel === num ? 'bg-black text-white' : 'bg-black/5 text-black/20 hover:bg-black/10'}`}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
           <button
             onClick={handleLogSubmit}
             className="w-full py-4 bg-black text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-gray-900 transition-colors disabled:opacity-50"
@@ -294,7 +312,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
 
       {/* Primary Data */}
       <section className="space-y-12">
-        <div className="flex items-baseline justify-between border-b border-black/[0.03] pb-12">
+        <div id="momentum-score-card" className="flex items-baseline justify-between border-b border-black/[0.03] pb-12">
           <div className="space-y-1">
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/20">Daily Momentum</span>
             <div className="flex items-baseline gap-2">
@@ -322,7 +340,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
       </section>
 
       {/* Actions (Non-Negotiables) */}
-      <section className="space-y-8">
+      <section id="habits-section" className="space-y-8">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/30">Non-Negotiables</h2>
@@ -390,7 +408,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
       </section>
 
       {/* Schedule (Daily Operations) */}
-      <section className="space-y-8 pt-12 border-t border-[var(--border)]">
+      <section id="schedule-section" className="space-y-8 pt-12 border-t border-[var(--border)]">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-secondary)]">Daily Operations</h2>

@@ -33,6 +33,7 @@ export const Layout: React.FC<{
             <NavLink
               key={item.to}
               to={item.to}
+              id={`nav-${item.to.replace('/', '') || 'today'}`}
               className={({ isActive }) => `flex items-center justify-center transition-all ${isActive ? 'text-black scale-110' : 'text-black/20 hover:text-black/40'}`}
             >
               <item.icon size={18} strokeWidth={2.5} />
@@ -40,6 +41,7 @@ export const Layout: React.FC<{
           ))}
           <div className="w-px h-4 bg-black/5" />
           <button
+            id="nav-settings"
             onClick={() => setShowSettings(true)}
             className="flex items-center justify-center text-black/20 hover:text-black/40 transition-all"
           >
@@ -74,6 +76,15 @@ export const Layout: React.FC<{
             </div>
 
             <div className="space-y-4">
+              <button
+                onClick={() => {
+                  (window as any).restartTutorial?.();
+                  setShowSettings(false);
+                }}
+                className="w-full py-4 bg-black text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                Restart Tutorial
+              </button>
               <button
                 onClick={onLogout}
                 className="w-full py-4 border border-black text-black rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all"

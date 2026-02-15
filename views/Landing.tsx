@@ -18,16 +18,16 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
 
   const roles = [
     { id: 'founder', label: 'Founder / CEO', icon: <Zap size={18} /> },
-    { id: 'creator', label: 'Creator / Artist', icon: <Sparkles size={18} /> },
-    { id: 'student', label: 'Student', icon: <Clock size={18} /> },
-    { id: 'overwhelmed', label: 'Overwhelmed Human 😵‍💫', icon: <ShieldAlert size={18} /> },
+    { id: 'creator', label: 'High-Level Creator', icon: <Sparkles size={18} /> },
+    { id: 'student', label: 'Aspiring Leader', icon: <Clock size={18} /> },
+    { id: 'discipline', label: 'Seeking Elite Discipline', icon: <ShieldAlert size={18} /> },
   ];
 
   const pains = [
     { id: 'procrastination', label: 'Procrastination', icon: <Target size={18} /> },
-    { id: 'structure', label: 'No Structure', icon: <ShieldAlert size={18} /> },
-    { id: 'forgetting', label: 'Forgetting Tasks', icon: <Clock size={18} /> },
-    { id: 'focus', label: 'Distractions', icon: <Zap size={18} /> },
+    { id: 'chaos', label: 'Lack of Structure', icon: <ShieldAlert size={18} /> },
+    { id: 'forgetting', label: 'Failure to Execute', icon: <Clock size={18} /> },
+    { id: 'focus', label: 'Struggling to Focus', icon: <Zap size={18} /> },
   ];
 
   const handleFinish = () => {
@@ -43,17 +43,17 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
         <div className="text-center max-w-3xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000 relative z-10">
           <div className="space-y-6">
             <div className="flex flex-col items-center gap-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-black/40 bg-black/5 px-4 py-2 rounded-full border border-black/5">Secure Your Potential</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-red-500 bg-red-500/5 px-4 py-2 rounded-full border border-red-500/10">Claim Your Standard</span>
               <h1 className="text-4xl md:text-5xl font-serif text-[var(--text-primary)] tracking-tight leading-tight">
-                go fetch.
+                Go Fetch.
               </h1>
             </div>
 
             <div className="space-y-8 max-w-2xl mx-auto">
               <div className="space-y-3">
                 <h2 className="text-xl md:text-2xl font-serif italic text-[var(--text-primary)] leading-relaxed">
-                  You aren't racing your habits.<br />
-                  You're racing your potential.
+                  Your potential is an insult.<br />
+                  Execution is the only apology.
                 </h2>
               </div>
 
@@ -64,12 +64,12 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
                 </div>
 
                 <p className="text-base md:text-lg font-serif leading-relaxed relative z-10 italic text-[var(--text-primary)]">
-                  "Most planners let you hide behind <span className="text-[var(--text-secondary)]">good intentions</span>. Go Fetch uses a <span className="font-semibold text-[var(--accent)]">Momentum Engine</span> to keep you focused. You won't just track your day—you'll elevate it."
+                  "Most apps are built to track your past. Go Fetch is built to <span className="font-semibold text-[var(--accent)]">architect your future</span>. I am your Coach. We don't just log data—we build momentum. Your best self is waiting on the other side of consistency."
                 </p>
 
                 <div className="flex items-center gap-4 pt-4 relative z-10">
                   <div className="h-px w-12 bg-[var(--accent)]/30" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--accent)]">The No Excuses Manifesto</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--accent)]">The No Excuses Protocol</span>
                 </div>
               </div>
             </div>
@@ -78,9 +78,9 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
           <div className="space-y-8 max-w-sm mx-auto">
             <button
               onClick={() => setStep('role')}
-              className="w-full py-4 text-base group border border-[var(--border)] hover:border-[var(--accent)] transition-all rounded-xl flex items-center justify-center gap-3 text-[var(--text-primary)] font-serif italic"
+              className="w-full py-4 text-base group bg-black text-white hover:bg-zinc-800 transition-all rounded-xl flex items-center justify-center gap-3 font-serif italic"
             >
-              <span>Get Started</span>
+              <span>Begin Audit</span>
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -88,13 +88,13 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
               <SignInButton mode="modal">
                 <div className="text-center cursor-pointer group">
                   <button className="text-xs font-serif italic text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-                    Already have an account? Log In
+                    Already in the pursuit? Log In
                   </button>
                 </div>
               </SignInButton>
               <div className="flex items-center gap-3 opacity-10">
                 <div className="h-[1px] w-6 bg-[var(--text-secondary)]" />
-                <span className="text-[8px] font-bold uppercase tracking-widest text-[var(--text-secondary)]">Powered by Gemini</span>
+                <span className="text-[8px] font-bold uppercase tracking-widest text-[var(--text-secondary)]">Forged by Coach</span>
                 <div className="h-[1px] w-6 bg-[var(--text-secondary)]" />
               </div>
             </div>
@@ -109,9 +109,9 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
       <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-[var(--bg-primary)]">
         <div className="max-w-md w-full space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/40">Step 1/2</span>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500/40">Step 1/2</span>
             <h2 className="text-4xl font-serif">Who are you?</h2>
-            <p className="text-sm text-black/50 font-serif italic">I need to know who I'm coaching.</p>
+            <p className="text-sm text-black/50 font-serif italic">I need to know who I'm coaching so I can tailor your plan.</p>
           </div>
 
           <div className="grid gap-3">
@@ -144,9 +144,9 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
       <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-[var(--bg-primary)]">
         <div className="max-w-md w-full space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/40">Step 2/2</span>
-            <h2 className="text-4xl font-serif">What hurts most?</h2>
-            <p className="text-sm text-black/50 font-serif italic">Be honest. I'm here to fix this.</p>
+            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500/40">Step 2/2</span>
+            <h2 className="text-4xl font-serif">What is your biggest challenge?</h2>
+            <p className="text-sm text-black/50 font-serif italic">Be honest with yourself about your bottlenecks. That's where growth begins.</p>
           </div>
 
           <div className="grid gap-3">

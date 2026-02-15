@@ -86,6 +86,7 @@ export const Goals: React.FC<GoalsProps> = ({ goals, onUpdateGoals }) => {
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/20">Declare your long-term intentions</p>
           </div>
           <button
+            id="add-goal-button"
             onClick={() => setIsAdding(true)}
             className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center hover:bg-black hover:text-white transition-all transform active:scale-95"
           >

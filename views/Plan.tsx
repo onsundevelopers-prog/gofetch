@@ -61,6 +61,7 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
           </div>
           {!isLocked && planEvents.length > 0 && (
             <button
+              id="lock-plan-button"
               onClick={handleLockPlan}
               className="flex items-center gap-2 px-6 py-2 bg-black text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gray-800 transition-all transform active:scale-95"
             >
