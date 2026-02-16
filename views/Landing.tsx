@@ -43,7 +43,6 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
         <div className="text-center max-w-3xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000 relative z-10">
           <div className="space-y-6">
             <div className="flex flex-col items-center gap-3">
-              <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-red-500 bg-red-500/5 px-4 py-2 rounded-full border border-red-500/10">Claim Your Standard</span>
               <h1 className="text-4xl md:text-5xl font-serif text-[var(--text-primary)] tracking-tight leading-tight">
                 Go Fetch.
               </h1>
@@ -64,12 +63,12 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
                 </div>
 
                 <p className="text-base md:text-lg font-serif leading-relaxed relative z-10 italic text-[var(--text-primary)]">
-                  "Most apps are built to track your past. Go Fetch is built to <span className="font-semibold text-[var(--accent)]">architect your future</span>. I am your Coach. We don't just log data—we build momentum. Your best self is waiting on the other side of consistency."
+                  "Most apps just track what you’ve already done. Go Fetch is different. I’m your coach. We’re here to help you stay consistent and actually make progress. Your best self is waiting on the other side of consistency."
                 </p>
 
                 <div className="flex items-center gap-4 pt-4 relative z-10">
                   <div className="h-px w-12 bg-[var(--accent)]/30" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--accent)]">The No Excuses Protocol</span>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--accent)]">Your Habit Coach</span>
                 </div>
               </div>
             </div>
@@ -80,7 +79,7 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
               onClick={() => setStep('role')}
               className="w-full py-4 text-base group bg-black text-white hover:bg-zinc-800 transition-all rounded-xl flex items-center justify-center gap-3 font-serif italic"
             >
-              <span>Begin Audit</span>
+              <span>Begin Questionnaire</span>
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -180,7 +179,7 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
                     }}
                     className="bg-black text-white w-full py-5 rounded-2xl font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-800 transition-all shadow-xl"
                   >
-                    Accept My Battle Plan
+                    Lock In
                   </button>
                 </SignUpButton>
               </div>

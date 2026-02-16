@@ -12,7 +12,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ history, user }) => {
   const chartData = history.length > 0
     ? [...history].reverse().map(r => ({
       name: r.date.split('-')[2],
-      score: r.productivityScore || 0
+      score: r.score || r.productivityScore || 0
     }))
     : Array.from({ length: 7 }, (_, i) => ({
       name: String(i + 1),
@@ -20,7 +20,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ history, user }) => {
     }));
 
   const avgScore = history.length > 0
-    ? Math.round(history.reduce((acc, r) => acc + (r.productivityScore || 0), 0) / history.length)
+    ? Math.round(history.reduce((acc, r) => acc + (r.score || r.productivityScore || 0), 0) / history.length)
     : 0;
 
   return (
@@ -107,7 +107,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ history, user }) => {
                   </p>
                 </div>
                 <div className="text-2xl font-serif text-black/10 group-hover:text-black transition-colors">
-                  {record.productivityScore}
+                  {record.score || record.productivityScore}
                 </div>
               </div>
             ))}

@@ -4,7 +4,7 @@ import { Shield, Sparkles, Trophy } from 'lucide-react';
 export const Potential: React.FC<{ user: any; history: any[] }> = ({ user, history }) => {
     const currentMomentum = user?.score || 0;
     const bestMomentum = history.length > 0
-        ? Math.max(...history.map(h => h.productivityScore || 0), 85)
+        ? Math.max(...history.map(h => h.score || h.productivityScore || 0), 85)
         : 85;
     const gap = bestMomentum - currentMomentum;
 

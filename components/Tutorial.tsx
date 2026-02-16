@@ -24,54 +24,40 @@ const STEPS: Step[] = [
     {
         id: 2,
         title: "The Momentum Score",
-        content: "This shows how consistent you are. Click the 'Check Score' button after your daily audit to see your latest progress. Aim for 100!",
+        content: "This shows how consistent you are. Aim for 100! Your score tracks your discipline over time.",
         targetId: "momentum-score-card",
         path: "/"
     },
     {
         id: 3,
         title: "Your Daily Audit",
-        content: "CRITICAL: You must type what you did today in this reflection box. This is how I create your schedule. Without your input, there is no plan.",
+        content: "CRITICAL: Type what you did today here. This is how I create your schedule. Without your input, there is no plan.",
         targetId: "reflection-section",
         path: "/"
     },
     {
         id: 4,
         title: "Check Your Progress",
-        content: "After typing your reflection and marking your habits, click 'Check Score' below. I will analyze your effort and judge if the day counted.",
+        content: "After typing your reflection, click 'Check Score'. I will analyze your effort and judge if the day counted.",
         targetId: "audit-button",
         path: "/"
     },
     {
         id: 5,
         title: "The Battle Plan",
-        content: "Once you audit your day, your hourly schedule for tomorrow appears here. Follow it exactly to eliminate laziness.",
+        content: "Once you audit your day, your hourly schedule for tomorrow appears here. Follow it exactly.",
         targetId: "schedule-section",
         path: "/"
     },
     {
         id: 6,
         title: "Non-Negotiable Habits",
-        content: "Check off your habits as you do them. If you miss one, you must explain why in your daily reflection.",
+        content: "Check off your habits as you do them. If you miss one, you must explain why in your reflection.",
         targetId: "habits-section",
         path: "/"
     },
     {
         id: 7,
-        title: "Strategic Goals",
-        content: "This is for your big dreams. Let's head to the Goals page to set your first long-term mission.",
-        targetId: "nav-goals",
-        path: "/goals"
-    },
-    {
-        id: 8,
-        title: "Plant Your Flag",
-        content: "Click the '+' button to add a goal. I will check if it's a real goal or just a wish. (Add a goal to move to the next step).",
-        targetId: "add-goal-button",
-        path: "/goals"
-    },
-    {
-        id: 9,
         title: "Ready to Execute",
         content: "You're all set. Remember: Reflection -> Check Score -> Follow Schedule. Now, go and be great.",
         targetId: "nav-today",
@@ -91,7 +77,7 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
     useEffect(() => {
         // Force reset for this update so the user sees the new tutorial content
         const lastVersion = localStorage.getItem('tutorial_version');
-        const currentVersion = '2.1'; // New version with per-user tracking
+        const currentVersion = '2.2'; // New 7-step version
 
         if (lastVersion !== currentVersion) {
             localStorage.setItem('tutorial_version', currentVersion);
@@ -168,17 +154,8 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
         if (currentStepIndex === null) return false;
         const step = STEPS[currentStepIndex];
 
-        // Step 8: Add a Goal
-        if (step.id === 8) {
-            const goals = JSON.parse(localStorage.getItem('user_goals') || '[]');
-            return goals.length === 0;
-        }
-
-        // Step 10: Lock Plan
-        if (step.id === 10) {
-            const isLocked = localStorage.getItem('plan_locked_today') === 'true';
-            return !isLocked;
-        }
+        // No steps currently blocked in the 7-step version
+        return false;
 
         return false;
     };
@@ -188,7 +165,13 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
         localStorage.setItem(storageKey, 'true');
     };
 
-    if (currentStepIndex === null) return null;
+    if (currentStepIndex === null || !STEPS[currentStepIndex]) {
+        // Safety reset if for some reason the index is out of bounds (e.g. after shortening STEPS)
+        if (currentStepIndex !== null && currentStepIndex >= STEPS.length) {
+            handleSkip();
+        }
+        return null;
+    }
 
     const currentStep = STEPS[currentStepIndex];
 
@@ -214,7 +197,7 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
                                 <div className="w-6 h-6 bg-black rounded-lg flex items-center justify-center">
                                     <Sparkles size={12} className="text-white" />
                                 </div>
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">Step {currentStepIndex + 1} of 12</span>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">Step {currentStepIndex + 1} of {STEPS.length}</span>
                             </div>
                             <button
                                 onClick={handleSkip}

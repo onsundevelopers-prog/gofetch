@@ -203,6 +203,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
         date: new Date().toISOString(),
         reflection: dailyLog,
         score: result.score,
+        productivityScore: result.score,
         didTodayCount: result.didTodayCount,
         report: result.text
       };
@@ -319,7 +320,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
             <div className="flex items-baseline gap-2">
               <span className="text-8xl font-serif text-[var(--text-primary)] tracking-tighter animate-float">{user.score || 0}</span>
               <div className="flex flex-col">
-                <span className="text-xs font-bold text-[var(--accent)]">+{Math.min(user.score, 12)}%</span>
+                <span className="text-xs font-bold text-[var(--accent)]">
+                  {(() => {
+                    const today = new Date().toDateString();
+                    const previousRecord = history.find(r => new Date(r.date).toDateString() !== today);
+                    const previousScore = previousRecord ? (previousRecord.score || previousRecord.productivityScore || 0) : 0;
+                    const diff = (user.score || 0) - previousScore;
+                    return `${diff >= 0 ? '+' : ''}${diff}%`;
+                  })()}
+                </span>
                 <span className="text-[8px] font-bold uppercase tracking-widest text-black/10">Growth</span>
               </div>
             </div>
@@ -412,7 +421,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
       <section id="schedule-section" className="space-y-8 pt-12 border-t border-[var(--border)]">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-secondary)]">Daily Operations</h2>
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--text-secondary)]">Schedule</h2>
             <p className="text-[8px] font-bold uppercase tracking-widest text-[var(--text-secondary)]/50">Execute your high-leverage blocks directly.</p>
           </div>
         </div>
