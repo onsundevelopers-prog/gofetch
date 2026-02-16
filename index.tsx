@@ -47,17 +47,31 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 
   render() {
     if (this.state.hasError) {
+      const errorMsg = String(this.state.error?.message || this.state.error);
+      const isConvexMissing = errorMsg.includes("Could not find public function");
+
       return (
         <div className="min-h-screen bg-[#F2E9DE] flex items-center justify-center p-8">
           <div className="bg-white p-12 rounded-[4rem] shadow-2xl border border-black/5 max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-500">
             <div className="w-20 h-20 bg-amber-100 rounded-[2rem] flex items-center justify-center mx-auto text-3xl">🧩</div>
-            <div className="space-y-2">
-              <h1 className="text-3xl font-serif font-black text-[#1A1A1A] tracking-tight text-center">System Refresh</h1>
-              <p className="text-[10px] font-black text-black/20 uppercase tracking-[0.2em] text-center">Charlie caught a glitch</p>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-serif font-black text-[#1A1A1A] tracking-tight">{isConvexMissing ? 'Backend Not Deployed' : 'System Refresh'}</h1>
+                <p className="text-[10px] font-black text-black/20 uppercase tracking-[0.2em]">{isConvexMissing ? 'Sync Required' : 'Charlie caught a glitch'}</p>
+              </div>
+
+              {isConvexMissing && (
+                <div className="bg-blue-50 p-4 rounded-2xl text-left space-y-2 border border-blue-100">
+                  <p className="text-[10px] font-bold text-blue-700 uppercase tracking-widest">How to fix:</p>
+                  <p className="text-xs text-blue-900 leading-relaxed font-medium">
+                    Run <code className="bg-blue-100 px-1.5 py-0.5 rounded text-blue-800 font-bold">npx convex dev</code> in your terminal to sync the functions to your local backend.
+                  </p>
+                </div>
+              )}
             </div>
 
-            <p className="text-xs font-bold text-gray-400 bg-[#F2E9DE]/30 p-6 rounded-3xl font-mono break-all leading-relaxed text-center">
-              {String(this.state.error?.message || this.state.error)}
+            <p className="text-xs font-bold text-gray-400 bg-[#F2E9DE]/30 p-6 rounded-3xl font-mono break-all leading-relaxed">
+              {errorMsg}
             </p>
 
             <div className="flex flex-col gap-3">
@@ -65,7 +79,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 onClick={() => window.location.reload()}
                 className="w-full bg-black text-white px-8 py-6 rounded-full font-black uppercase text-[10px] tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl"
               >
-                Restart System
+                {isConvexMissing ? 'Re-check Connection' : 'Restart System'}
               </button>
               <button
                 onClick={() => {
