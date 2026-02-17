@@ -1,4 +1,4 @@
-// Refined onboarding experience
+// Refined onboarding experience - Updated 2026-02-16
 import React, { useState, useEffect } from 'react';
 import { SignInButton, SignUpButton } from '@clerk/clerk-react';
 import { ArrowRight, Sparkles, Target, Zap, Clock, ShieldAlert, Cpu, GraduationCap, Briefcase, Rocket, User, Dumbbell, Coffee, BookOpen, TrendingUp, Heart } from 'lucide-react';
