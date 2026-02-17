@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SignInButton, SignUpButton } from '@clerk/clerk-react';
-import { ArrowRight, Sparkles, Target, Zap, Clock, ShieldAlert } from 'lucide-react';
+import { ArrowRight, Sparkles, Target, Zap, Clock, ShieldAlert, Cpu, GraduationCap, Briefcase, Rocket, User, Dumbbell } from 'lucide-react';
 
 interface LandingProps {
   onNext: (mode: 'guest' | 'auth', data?: any) => void;
@@ -8,6 +8,23 @@ interface LandingProps {
 }
 
 type OnboardingStep = 'welcome' | 'role' | 'pain';
+
+const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState('');
+
+  useEffect(() => {
+    setDisplayedText('');
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayedText((prev) => prev + text.charAt(i));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, 20);
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return <span>{displayedText}</span>;
+};
 
 export const Landing: React.FC<LandingProps> = ({ onNext }) => {
   const [step, setStep] = useState<OnboardingStep>('welcome');
@@ -17,10 +34,42 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
   });
 
   const roles = [
-    { id: 'founder', label: 'Founder / CEO', icon: <Zap size={18} /> },
-    { id: 'creator', label: 'High-Level Creator', icon: <Sparkles size={18} /> },
-    { id: 'student', label: 'Aspiring Leader', icon: <Clock size={18} /> },
-    { id: 'discipline', label: 'Seeking Elite Discipline', icon: <ShieldAlert size={18} /> },
+    {
+      id: 'founder',
+      label: 'High Intensity Founder',
+      icon: <Rocket size={18} />,
+      description: "You're building the future and need extreme focus to scale without burning out."
+    },
+    {
+      id: 'creator',
+      label: 'Elite Creative',
+      icon: <Sparkles size={18} />,
+      description: "You need a system that captures inspiration and turns it into consistent, high-impact output."
+    },
+    {
+      id: 'athlete',
+      label: 'Performance Athlete',
+      icon: <Dumbbell size={18} />,
+      description: "Your days are measured in split seconds and sets. Every habit is a victory toward your next peak."
+    },
+    {
+      id: 'student',
+      label: 'Aspiring Polymath',
+      icon: <GraduationCap size={18} />,
+      description: "You're learning at a massive rate. You need clarity to balance study, life, and personal growth."
+    },
+    {
+      id: 'professional',
+      label: 'Corporate Operator',
+      icon: <Briefcase size={18} />,
+      description: "You navigate complex systems. You need a personal dashboard to stay ahead of the chaos."
+    },
+    {
+      id: 'general',
+      label: 'Self-Optimizer',
+      icon: <User size={18} />,
+      description: "You're here for one thing: becoming 1% better every single day. No excuses."
+    },
   ];
 
   const pains = [
@@ -52,7 +101,7 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
               <div className="space-y-3">
                 <h2 className="text-xl md:text-2xl font-serif italic text-[var(--text-primary)] leading-relaxed">
                   Your potential isnt hidden, its just undiscovered.<br />
-                  Execution is the only mapping.
+                  Execution is the only apology.
                 </h2>
               </div>
 
@@ -104,6 +153,8 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
   }
 
   if (step === 'role') {
+    const selectedRole = roles.find(r => r.id === onboardingData.role);
+
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-[var(--bg-primary)]">
         <div className="max-w-md w-full space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
@@ -119,20 +170,36 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
                 key={r.id}
                 onClick={() => {
                   setOnboardingData({ ...onboardingData, role: r.id });
-                  setStep('pain');
                 }}
-                className="flex items-center justify-between p-5 bg-white border border-black/5 rounded-2xl text-left hover:border-black hover:shadow-lg transition-all group"
+                className={`flex items-center justify-between p-5 bg-white border rounded-2xl text-left transition-all group ${onboardingData.role === r.id ? 'border-black shadow-lg ring-1 ring-black/5' : 'border-black/5 hover:border-black'}`}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${onboardingData.role === r.id ? 'bg-black text-white' : 'bg-black/5 group-hover:bg-black group-hover:text-white'}`}>
                     {r.icon}
                   </div>
                   <span className="font-medium">{r.label}</span>
                 </div>
-                <ArrowRight size={18} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                {onboardingData.role === r.id && <ArrowRight size={18} />}
               </button>
             ))}
           </div>
+
+          {selectedRole && (
+            <div className="space-y-6 pt-4 animate-in fade-in slide-in-from-top-2">
+              <div className="p-6 bg-black/[0.02] border border-black/5 rounded-2xl">
+                <p className="text-sm font-serif italic text-black/60 leading-relaxed min-h-[48px]">
+                  <TypewriterText text={selectedRole.description} />
+                </p>
+              </div>
+              <button
+                onClick={() => setStep('pain')}
+                className="w-full py-4 bg-black text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-all flex items-center justify-center gap-3"
+              >
+                <span>Continue</span>
+                <ArrowRight size={18} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );
