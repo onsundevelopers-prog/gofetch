@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SignInButton, SignUpButton } from '@clerk/clerk-react';
-import { ArrowRight, Sparkles, Target, Zap, Clock, ShieldAlert, Cpu, GraduationCap, Briefcase, Rocket, User, Dumbbell } from 'lucide-react';
+import { ArrowRight, Sparkles, Target, Zap, Clock, ShieldAlert, Cpu, GraduationCap, Briefcase, Rocket, User, Dumbbell, Coffee, BookOpen, TrendingUp, Heart } from 'lucide-react';
 
 interface LandingProps {
   onNext: (mode: 'guest' | 'auth', data?: any) => void;
@@ -35,40 +35,40 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
 
   const roles = [
     {
-      id: 'founder',
-      label: 'High Intensity Founder',
+      id: 'business',
+      label: 'Building a Business',
       icon: <Rocket size={18} />,
-      description: "You're building the future and need extreme focus to scale without burning out."
+      description: "You're juggling a thousand things at once. I'll help you cut through the noise and focus on what actually moves the needle."
     },
     {
-      id: 'creator',
-      label: 'Elite Creative',
+      id: 'creative',
+      label: 'Content & Design',
       icon: <Sparkles size={18} />,
-      description: "You need a system that captures inspiration and turns it into consistent, high-impact output."
+      description: "Consistency is often the hardest part of being a creator. Let's build a routine that protects your focus and fuels your best work."
     },
     {
-      id: 'athlete',
-      label: 'Performance Athlete',
+      id: 'fitness',
+      label: 'Fitness & Health',
       icon: <Dumbbell size={18} />,
-      description: "Your days are measured in split seconds and sets. Every habit is a victory toward your next peak."
+      description: "Your physical performance is the foundation for everything else. We'll track the daily habits that lead to your next peak."
     },
     {
-      id: 'student',
-      label: 'Aspiring Polymath',
-      icon: <GraduationCap size={18} />,
-      description: "You're learning at a massive rate. You need clarity to balance study, life, and personal growth."
+      id: 'learning',
+      label: 'Learning & School',
+      icon: <BookOpen size={18} />,
+      description: "Information is everywhere, but real growth requires discipline. I'll help you lock in your study habits and master new skills."
     },
     {
-      id: 'professional',
-      label: 'Corporate Operator',
-      icon: <Briefcase size={18} />,
-      description: "You navigate complex systems. You need a personal dashboard to stay ahead of the chaos."
+      id: 'career',
+      label: 'Career Growth',
+      icon: <TrendingUp size={18} />,
+      description: "You're aiming for the next level in your professional life. Let's manage your energy and time so you can stay ahead of the curve."
     },
     {
       id: 'general',
-      label: 'Self-Optimizer',
-      icon: <User size={18} />,
-      description: "You're here for one thing: becoming 1% better every single day. No excuses."
+      label: 'Self-Improvement',
+      icon: <Heart size={18} />,
+      description: "You're here because you know you're capable of more. Let's start turning your potential into actual daily progress."
     },
   ];
 
@@ -160,8 +160,8 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
         <div className="max-w-md w-full space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500/40">Step 1/2</span>
-            <h2 className="text-4xl font-serif">Who are you?</h2>
-            <p className="text-sm text-black/50 font-serif italic">I need to know who I'm coaching so I can tailor your plan.</p>
+            <h2 className="text-4xl font-serif">Tell me about yourself.</h2>
+            <p className="text-sm text-black/50 font-serif italic">I need to know what you're working on so I can create the best plan for you.</p>
           </div>
 
           <div className="grid gap-3">
@@ -211,8 +211,8 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
         <div className="max-w-md w-full space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500/40">Step 2/2</span>
-            <h2 className="text-4xl font-serif">What is your biggest challenge?</h2>
-            <p className="text-sm text-black/50 font-serif italic">Be honest with yourself about your bottlenecks. That's where growth begins.</p>
+            <h2 className="text-4xl font-serif">What's holding you back?</h2>
+            <p className="text-sm text-black/50 font-serif italic">Be honest about what gets in your way. That's the only way we can fix it.</p>
           </div>
 
           <div className="grid gap-3">
