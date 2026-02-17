@@ -51,8 +51,8 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
             <div className="space-y-8 max-w-2xl mx-auto">
               <div className="space-y-3">
                 <h2 className="text-xl md:text-2xl font-serif italic text-[var(--text-primary)] leading-relaxed">
-                  Your potential is an insult.<br />
-                  Execution is the only apology.
+                  Your potential isnt hidden, its just undiscovered.<br />
+                  Execution is the only mapping.
                 </h2>
               </div>
 
