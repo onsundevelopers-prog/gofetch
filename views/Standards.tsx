@@ -324,7 +324,7 @@ export const Standards: React.FC<StandardsProps> = ({
 
             {/* Modals */}
             {isAddingHabit && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
                     <div className="w-full max-w-xs space-y-8">
                         <header className="space-y-2">
                             <h3 className="text-3xl font-serif">New Standard</h3>
@@ -373,7 +373,7 @@ export const Standards: React.FC<StandardsProps> = ({
             )}
 
             {showReport && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
                     <div className="max-w-sm w-full space-y-8">
                         <div className="space-y-2 text-center">
                             <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">The Verdict</span>

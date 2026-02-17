@@ -158,7 +158,7 @@ export const Goals: React.FC<GoalsProps> = ({ goals, onUpdateGoals }) => {
 
       {/* Add Goal - Simplified Questionnaire */}
       {isAdding && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
           <div className="w-full max-w-sm space-y-12">
             <header className="space-y-2">
               <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">Step {step} of 3</span>
