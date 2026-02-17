@@ -12,6 +12,7 @@ import { Trial } from './views/Trial';
 import { Plan } from './views/Plan';
 import { Potential } from './views/Potential';
 import { Tutorial } from './components/Tutorial';
+import { Standards } from './views/Standards';
 import { useNotifications } from './hooks/useNotifications';
 import { useGuiltMechanic } from './hooks/useGuiltMechanic';
 
@@ -170,6 +171,7 @@ const App: React.FC = () => {
           >
             <Routes>
               <Route path="/" element={<Dashboard user={appUser} history={history} onUpdateHistory={handleUpdateHistory} goals={goals} onUpdatePlan={handleUpdatePlan} planEvents={planEvents} />} />
+              <Route path="/standards" element={<Standards user={appUser} history={history} onUpdateHistory={handleUpdateHistory} goals={goals} onUpdatePlan={handleUpdatePlan} planEvents={planEvents} />} />
               <Route path="/goals" element={<Goals goals={goals} onUpdateGoals={handleUpdateGoals} />} />
               <Route path="/potential" element={<Potential user={appUser} history={history} />} />
               <Route path="/plan" element={<Plan user={appUser} planEvents={planEvents} onUpdatePlan={handleUpdatePlan} />} />

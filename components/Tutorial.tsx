@@ -33,34 +33,41 @@ const STEPS: Step[] = [
         title: "Your Daily Audit",
         content: "CRITICAL: Type what you did today here. This is how I create your schedule. Without your input, there is no plan.",
         targetId: "reflection-section",
-        path: "/"
+        path: "/standards"
     },
     {
         id: 4,
         title: "Check Your Progress",
         content: "After typing your reflection, click 'Check Score'. I will analyze your effort and judge if the day counted.",
         targetId: "audit-button",
-        path: "/"
+        path: "/standards"
     },
     {
         id: 5,
         title: "The Battle Plan",
         content: "Once you audit your day, your hourly schedule for tomorrow appears here. Follow it exactly.",
-        targetId: "schedule-section",
-        path: "/"
+        targetId: "lock-plan-button",
+        path: "/plan"
     },
     {
         id: 6,
         title: "Non-Negotiable Habits",
         content: "Check off your habits as you do them. If you miss one, you must explain why in your reflection.",
         targetId: "habits-section",
-        path: "/"
+        path: "/standards"
     },
     {
         id: 7,
+        title: "Long-term Goals",
+        content: "Track your vision here. Anchor your daily habits to these outcomes.",
+        targetId: "goals-container",
+        path: "/goals"
+    },
+    {
+        id: 8,
         title: "Ready to Execute",
         content: "You're all set. Remember: Reflection -> Check Score -> Follow Schedule. Now, go and be great.",
-        targetId: "nav-today",
+        targetId: "nav-today", // Home icon in nav
         path: "/"
     }
 ];
@@ -77,7 +84,7 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
     useEffect(() => {
         // Force reset for this update so the user sees the new tutorial content
         const lastVersion = localStorage.getItem('tutorial_version');
-        const currentVersion = '2.2'; // New 7-step version
+        const currentVersion = '2.3'; // New 8-step version with auto-navigation
 
         if (lastVersion !== currentVersion) {
             localStorage.setItem('tutorial_version', currentVersion);
@@ -104,7 +111,7 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
         if (step.path && location.pathname !== step.path && !location.pathname.startsWith(step.path)) {
             navigate(step.path);
         }
-    }, [currentStepIndex]);
+    }, [currentStepIndex, location.pathname, navigate]);
 
     useEffect(() => {
         if (currentStepIndex === null) return;
@@ -126,7 +133,7 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
         };
 
         // Small delay to allow for page transitions and rendering
-        const timeoutId = setTimeout(updatePosition, 100);
+        const timeoutId = setTimeout(updatePosition, 300); // More generous delay for navigation
         window.addEventListener('scroll', updatePosition);
         window.addEventListener('resize', updatePosition);
         const interval = setInterval(updatePosition, 500);
@@ -154,9 +161,7 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
         if (currentStepIndex === null) return false;
         const step = STEPS[currentStepIndex];
 
-        // No steps currently blocked in the 7-step version
-        return false;
-
+        // No steps currently blocked in the updated version
         return false;
     };
 

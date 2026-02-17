@@ -56,8 +56,8 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
       <header className="pt-12 space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <h1 className="text-4xl font-serif text-black -tracking-wide">Daily Operations</h1>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/20 italic">No Excuses. No Compromises.</p>
+            <h1 className="text-4xl font-serif text-black -tracking-wide">Schedule</h1>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/60 italic">No Excuses. No Compromises.</p>
           </div>
           {!isLocked && planEvents.length > 0 && (
             <button

@@ -77,7 +77,7 @@ export const Goals: React.FC<GoalsProps> = ({ goals, onUpdateGoals }) => {
   const prevStep = () => setStep(step - 1);
 
   return (
-    <div className="min-h-screen p-6 pb-32 max-w-xl mx-auto space-y-16">
+    <div id="goals-container" className="min-h-screen p-6 pb-32 max-w-xl mx-auto space-y-16">
       {/* Header */}
       <header className="pt-12 space-y-4">
         <div className="flex items-center justify-between">

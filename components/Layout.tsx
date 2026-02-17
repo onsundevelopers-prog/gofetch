@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Target, BarChart2, MessageSquare, Sparkles, Users, LogOut, X, Calendar } from 'lucide-react';
+import { Home, Target, BarChart2, MessageSquare, Sparkles, Users, LogOut, X, Calendar, Bone } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/', icon: Home, label: 'Today' },
+  { to: '/standards', icon: Bone, label: 'Standards' },
   { to: '/plan', icon: Calendar, label: 'Plan' },
   { to: '/goals', icon: Target, label: 'Goals' },
   { to: '/potential', icon: Sparkles, label: 'Potential' },
