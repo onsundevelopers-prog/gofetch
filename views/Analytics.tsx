@@ -11,7 +11,7 @@ interface AnalyticsProps {
 export const Analytics: React.FC<AnalyticsProps> = ({ history, user }) => {
   const chartData = history.length > 0
     ? [...history].reverse().map(r => ({
-      name: r.date.split('-')[2],
+      name: r.date && r.date.includes('-') ? r.date.split('-')[2] : '?',
       score: r.score || r.productivityScore || 0
     }))
     : Array.from({ length: 7 }, (_, i) => ({

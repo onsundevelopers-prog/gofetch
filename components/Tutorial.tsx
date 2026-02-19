@@ -206,7 +206,7 @@ export const Tutorial: React.FC<{ userId?: string }> = ({ userId }) => {
                             </div>
                             <button
                                 onClick={handleSkip}
-                                className="p-1 hover:bg-black/5 rounded-full transition-colors text-black/10 hover:text-black"
+                                className="p-1 hover:bg-black/5 rounded-full transition-colors text-black/40 hover:text-black"
                                 title="Skip Tutorial"
                             >
                                 <X size={14} />

@@ -91,7 +91,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, history, goals, onUp
                 <span className="text-xs font-bold text-[var(--accent)]">
                   {(() => {
                     const today = new Date().toDateString();
-                    const previousRecord = history.find(r => new Date(r.date).toDateString() !== today);
+                    const previousRecord = history.find(r => r && r.date && new Date(r.date).toDateString() !== today);
                     const previousScore = previousRecord ? (previousRecord.score || previousRecord.productivityScore || 0) : 0;
                     const diff = (user.score || 0) - previousScore;
                     return `${diff >= 0 ? '+' : ''}${diff}%`;

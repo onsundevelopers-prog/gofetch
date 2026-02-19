@@ -91,18 +91,35 @@ const App: React.FC = () => {
     }
   };
 
-  // State for Goals and History with local persistence
   const [goals, setGoals] = useState<any[]>(() => {
     const saved = localStorage.getItem('user_goals');
-    return saved ? JSON.parse(saved) : [];
+    if (!saved || saved === 'undefined') return [];
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
   });
   const [history, setHistory] = useState<any[]>(() => {
     const saved = localStorage.getItem('user_history');
-    return saved ? JSON.parse(saved) : [];
+    if (!saved || saved === 'undefined') return [];
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
   });
   const [planEvents, setPlanEvents] = useState<any[]>(() => {
     const saved = localStorage.getItem('user_plan');
-    return saved ? JSON.parse(saved) : [];
+    if (!saved || saved === 'undefined') return [];
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      return [];
+    }
   });
 
   // Fetch Poke System: Notify user based on their plan
