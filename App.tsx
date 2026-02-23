@@ -36,7 +36,18 @@ const App: React.FC = () => {
 
   const [showPaywall, setShowPaywall] = useState(false);
   const [isGeneratingAvatar, setIsGeneratingAvatar] = useState(false);
-  const [guestUser, setGuestUser] = useState<any>(null);
+  const [guestUser, setGuestUser] = useState<any>(() => {
+    const saved = localStorage.getItem('guest_user_data');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  useEffect(() => {
+    if (guestUser) {
+      localStorage.setItem('guest_user_data', JSON.stringify(guestUser));
+    } else {
+      localStorage.removeItem('guest_user_data');
+    }
+  }, [guestUser]);
 
   // Stabilize appUser to prevent re-render loops
   const appUser = useMemo(() => {
@@ -178,6 +189,12 @@ const App: React.FC = () => {
             onLogout={() => {
               if (appUser.isGuest) {
                 setGuestUser(null);
+                localStorage.removeItem('guest_user_data');
+                localStorage.removeItem('habits_guest');
+                localStorage.removeItem('user_plan');
+                localStorage.removeItem('user_goals');
+                localStorage.removeItem('user_history');
+                window.location.reload(); // Hard reset for guest
               } else {
                 signOut();
               }

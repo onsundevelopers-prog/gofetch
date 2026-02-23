@@ -27,6 +27,8 @@ const TypewriterText: React.FC<{ text: string }> = ({ text }) => {
   return <span>{displayedText}</span>;
 };
 
+import { DogBuddy } from '../components/DogBuddy';
+
 export const Landing: React.FC<LandingProps> = ({ onNext }) => {
   const [step, setStep] = useState<OnboardingStep>('welcome');
   const [onboardingData, setOnboardingData] = useState({
@@ -39,45 +41,45 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
       id: 'business',
       label: 'Building a Business',
       icon: <Rocket size={18} />,
-      description: "You're juggling a thousand things at once. I'll help you cut through the noise and focus on what actually moves the needle."
+      description: "Ready to launch something amazing? I'll help you navigate the stars and keep your mission on track!"
     },
     {
       id: 'creative',
       label: 'Content & Design',
       icon: <Sparkles size={18} />,
-      description: "Consistency is often the hardest part of being a creator. Let's build a routine that protects your focus and fuels your best work."
+      description: "Creativity can feel like floating in space sometimes. Let's find your orbit and keep the flow consistent!"
     },
     {
       id: 'fitness',
       label: 'Fitness & Health',
       icon: <Dumbbell size={18} />,
-      description: "Your physical performance is the foundation for everything else. We'll track the daily habits that lead to your next peak."
+      description: "Your body is your spaceship! Let's fuel up and build the strength we need to explore new horizons."
     },
     {
       id: 'learning',
       label: 'Learning & School',
       icon: <BookOpen size={18} />,
-      description: "Information is everywhere, but real growth requires discipline. I'll help you lock in your study habits and master new skills."
+      description: "Knowledge is the ultimate power-up. I'll help you gather all the 'treats' of wisdom on your journey!"
     },
     {
       id: 'career',
       label: 'Career Growth',
       icon: <TrendingUp size={18} />,
-      description: "You're aiming for the next level in your professional life. Let's manage your energy and time so you can stay ahead of the curve."
+      description: "Aiming for the stars in your career? Let's chart a path that keeps you rising without the burnout."
     },
     {
       id: 'general',
       label: 'Self-Improvement',
       icon: <Heart size={18} />,
-      description: "You're here because you know you're capable of more. Let's start turning your potential into actual daily progress."
+      description: "Just want to be a better explorer today? I'm here to wag my tail for every single step you take!"
     },
   ];
 
   const pains = [
-    { id: 'procrastination', label: 'Procrastination', icon: <Target size={18} /> },
-    { id: 'chaos', label: 'Lack of Structure', icon: <ShieldAlert size={18} /> },
-    { id: 'forgetting', label: 'Failure to Execute', icon: <Clock size={18} /> },
-    { id: 'focus', label: 'Struggling to Focus', icon: <Zap size={18} /> },
+    { id: 'procrastination', label: 'Heavy Inertia', icon: <Target size={18} /> },
+    { id: 'chaos', label: 'Atmospheric Noise', icon: <ShieldAlert size={18} /> },
+    { id: 'forgetting', label: 'Lost Signals', icon: <Clock size={18} /> },
+    { id: 'focus', label: 'Magnetic Interference', icon: <Zap size={18} /> },
   ];
 
   const handleFinish = () => {
@@ -87,38 +89,36 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
   if (step === 'welcome') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-[var(--bg-primary)] relative overflow-hidden">
-        {/* Ambient Glow - Muted for Minimalism */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-black/[0.02] rounded-full blur-[100px]" />
+        {/* Soft Cosmic Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/[0.03] rounded-full blur-[100px]" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-500/[0.02] rounded-full blur-[100px]" />
 
-        <div className="text-center max-w-3xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-1000 relative z-10">
+        <div className="text-center max-w-3xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 relative z-10">
           <div className="space-y-6">
-            <div className="flex flex-col items-center gap-3">
-              <h1 className="text-4xl md:text-5xl font-serif text-[var(--text-primary)] tracking-tight leading-tight">
-                Go Fetch.
-              </h1>
+            <div className="flex flex-col items-center gap-6">
+              <DogBuddy mood="excited" size={240} className="drop-shadow-2xl" />
+              <div className="space-y-2">
+                <h1 className="text-5xl md:text-7xl font-serif text-[var(--text-primary)] tracking-tight leading-tight">
+                  Antigravity.
+                </h1>
+                <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-blue-500/60">Defy Your Inertia</p>
+              </div>
             </div>
 
             <div className="space-y-8 max-w-2xl mx-auto">
-              <div className="space-y-3">
-                <h2 className="text-xl md:text-2xl font-serif italic text-[var(--text-primary)] leading-relaxed">
-                  Your potential isnt hidden, its just undiscovered.<br />
-                  Execution is the only apology.
-                </h2>
-              </div>
+              <h2 className="text-xl md:text-2xl font-serif italic text-[var(--text-primary)] leading-relaxed">
+                Meet Buddy—your loyal companion on the path to high performance. No gravity, just growth.
+              </h2>
 
-              <div className="p-8 bg-gradient-to-br from-[#F5F1EB] to-[#EDE7DD] rounded-2xl space-y-6 relative overflow-hidden group border border-[var(--border)] shadow-sm">
-                {/* Visual Momentum Element */}
-                <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:scale-110 transition-transform duration-1000">
-                  <Zap size={160} className="text-[var(--accent)]" />
-                </div>
-
-                <p className="text-base md:text-lg font-serif leading-relaxed relative z-10 italic text-[var(--text-primary)]">
-                  "Most apps just track what you’ve already done. Go Fetch is different. I’m your coach. We’re here to help you stay consistent and actually make progress. Your best self is waiting on the other side of consistency."
+              <div className="p-10 bg-white/80 backdrop-blur-md rounded-[3rem] space-y-8 relative overflow-hidden group border border-white shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+                <p className="text-lg md:text-xl font-serif leading-relaxed relative z-10 italic text-[var(--text-primary)]">
+                  "Woof! Most apps just keep lists. I’m here to keep you flying. We’ll track your fetchable goals, wag for your wins, and help you break free from the weight of procrastination."
                 </p>
 
-                <div className="flex items-center gap-4 pt-4 relative z-10">
-                  <div className="h-px w-12 bg-[var(--accent)]/30" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--accent)]">Your Habit Coach</span>
+                <div className="flex items-center justify-center gap-4 pt-4 relative z-10">
+                  <div className="h-[2px] w-8 bg-blue-500/20" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500/50">Your Flight Companion</span>
+                  <div className="h-[2px] w-8 bg-blue-500/20" />
                 </div>
               </div>
             </div>
@@ -127,24 +127,22 @@ export const Landing: React.FC<LandingProps> = ({ onNext }) => {
           <div className="space-y-8 max-w-sm mx-auto">
             <button
               onClick={() => setStep('role')}
-              className="w-full py-4 text-base group bg-black text-white hover:bg-zinc-800 transition-all rounded-xl flex items-center justify-center gap-3 font-serif italic"
+              className="w-full py-5 text-lg group bg-black text-white hover:bg-zinc-800 transition-all rounded-3xl flex items-center justify-center gap-3 font-serif italic shadow-2xl active:scale-[0.98]"
             >
-              <span>Begin Questionnaire</span>
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              <span>Start the Mission</span>
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </button>
 
             <div className="flex flex-col items-center gap-6">
               <SignInButton mode="modal">
-                <div className="text-center cursor-pointer group">
-                  <button className="text-xs font-serif italic text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">
-                    Already in the pursuit? Log In
-                  </button>
-                </div>
+                <button className="text-xs font-serif italic text-[var(--text-secondary)] hover:text-blue-500 transition-colors">
+                  Already flying? Log In
+                </button>
               </SignInButton>
-              <div className="flex items-center gap-3 opacity-10">
-                <div className="h-[1px] w-6 bg-[var(--text-secondary)]" />
-                <span className="text-[8px] font-bold uppercase tracking-widest text-[var(--text-secondary)]">Forged by Coach</span>
-                <div className="h-[1px] w-6 bg-[var(--text-secondary)]" />
+              <div className="flex items-center gap-3 opacity-20">
+                <div className="h-[1px] w-12 bg-[var(--text-secondary)]" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-secondary)]">Antigravity Buddy</span>
+                <div className="h-[1px] w-12 bg-[var(--text-secondary)]" />
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 {
-    "name": "Go Fetch - No Excuses",
-    "short_name": "Fetch",
-    "description": "The only productivity app that pokes back.",
+    "name": "Antigravity - Defy Inertia",
+    "short_name": "Antigravity",
+    "description": "The only productivity platform that helps you fly higher.",
     "start_url": "./",
     "display": "standalone",
     "background_color": "#F2E9DE",

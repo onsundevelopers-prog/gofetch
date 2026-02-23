@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Target, BarChart2, MessageSquare, Sparkles, Users, LogOut, X, Calendar, Bone } from 'lucide-react';
+import { Home, Target, BarChart2, MessageSquare, SparklesBold as Sparkles, Users, LogOut, X, Calendar, Bone, Star, Rocket } from '../lib/icons';
 
 const NAV_ITEMS = [
-  { to: '/', icon: Home, label: 'Today' },
-  { to: '/standards', icon: Bone, label: 'Standards' },
-  { to: '/plan', icon: Calendar, label: 'Plan' },
-  { to: '/goals', icon: Target, label: 'Goals' },
-  { to: '/potential', icon: Sparkles, label: 'Potential' },
-  { to: '/analytics', icon: BarChart2, label: 'Analytics' },
+  { to: '/', icon: Home, label: 'Mission' },
+  { to: '/standards', icon: Star, label: 'Vitals' },
+  { to: '/plan', icon: Calendar, label: 'Orbit' },
+  { to: '/goals', icon: Target, label: 'Targets' },
+  { to: '/potential', icon: Sparkles, label: 'Zenith' },
+  { to: '/analytics', icon: BarChart2, label: 'Signals' },
 ] as const;
 
 export const Layout: React.FC<{
@@ -35,9 +35,9 @@ export const Layout: React.FC<{
               key={item.to}
               to={item.to}
               id={`nav-${item.to.replace('/', '') || 'today'}`}
-              className={({ isActive }) => `flex items-center justify-center transition-all ${isActive ? 'text-black scale-110' : 'text-black/20 hover:text-black/40'}`}
+              className={({ isActive }) => `flex items-center justify-center transition-all ${isActive ? 'text-black scale-125' : 'text-black/20 hover:text-black/40 hover:scale-110'}`}
             >
-              <item.icon size={18} strokeWidth={2.5} />
+              <item.icon size={20} strokeWidth={2.5} />
             </NavLink>
           ))}
           <div className="w-px h-4 bg-black/5" />

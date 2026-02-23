@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Plus, X, Calendar, Lock, Circle, CheckCircle2, Zap, ArrowRight, Star } from 'lucide-react';
+import { Plus, X, Lock, Circle, Zap, ArrowRight, Calendar, SparklesBold as Sparkles } from '../lib/icons';
+import { DogBuddy } from '../components/DogBuddy';
 
 interface PlanProps {
   user: any;
@@ -8,7 +9,7 @@ interface PlanProps {
 }
 
 export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan }) => {
-  const [newEvent, setNewEvent] = useState({ title: '', start: '', end: '', type: 'deep-work' });
+  const [newEvent, setNewEvent] = useState({ title: '', start: '', end: '', type: 'mission' });
   const [isAdding, setIsAdding] = useState(false);
   const [isLocked, setIsLocked] = useState(() => {
     const saved = localStorage.getItem('plan_locked_today');
@@ -25,77 +26,66 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
   };
 
   const hours = Array.from({ length: 14 }, (_, i) => i + 6); // 6am to 8pm
-
-  // Use local state if onUpdatePlan is not provided (for standalone testing or prev compatibility), but prefer props
   const events = planEvents;
 
   const handleAddStringEvent = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newEvent.title || !newEvent.start) return;
-    onUpdatePlan([...events, { ...newEvent, id: Date.now().toString(), completed: false }]);
-    setNewEvent({ title: '', start: '', end: '', type: 'deep-work' });
+    onUpdatePlan([...events, { ...newEvent, id: Date.now().toString(), completed: false, type: newEvent.type.toUpperCase() }]);
+    setNewEvent({ title: '', start: '', end: '', type: 'mission' });
     setIsAdding(false);
   }
 
   const completedCount = planEvents.filter(e => e.completed).length;
   const totalCount = planEvents.length;
   const momentum = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
-
-  // Find the first uncompleted event to enforce "one at a time"
   const firstUncompletedId = planEvents.find(e => !e.completed)?.id;
 
   const handleCompleteDay = () => {
-    // Navigation or trigger overview
     window.location.hash = '/';
     localStorage.setItem('trigger_overview', 'true');
   };
 
   return (
-    <div className="min-h-screen p-6 pb-32 max-w-xl mx-auto space-y-16">
+    <div className="min-h-screen p-6 pb-32 max-w-2xl mx-auto space-y-12 animate-fade-in font-sans">
       {/* Header */}
-      <header className="pt-12 space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <h1 className="text-4xl font-serif text-black -tracking-wide">Schedule</h1>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/60 italic">No Excuses. No Compromises.</p>
+      <header className="pt-8 flex flex-col items-center text-center space-y-6">
+        <DogBuddy mood={momentum === 100 ? 'excited' : 'happy'} size={140} className="drop-shadow-xl" />
+        <div className="flex flex-col items-center gap-4 w-full">
+          <div className="space-y-1">
+            <h1 className="text-4xl font-serif text-[var(--text-primary)]">Flight Path</h1>
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-500/40">Your daily orbit is calculated.</p>
           </div>
+
           {!isLocked && planEvents.length > 0 && (
             <button
-              id="lock-plan-button"
               onClick={handleLockPlan}
-              className="flex items-center gap-2 px-6 py-2 bg-black text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gray-800 transition-all transform active:scale-95"
+              className="px-8 py-3 bg-blue-500 text-white rounded-full text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all active:scale-95"
             >
-              Lock Schedule
+              Lock Orbit
             </button>
           )}
           {isLocked && (
-            <div className="flex items-center gap-2 px-6 py-2 border border-black text-black rounded-xl text-[10px] font-bold uppercase tracking-widest">
-              Schedule Active
+            <div className="px-6 py-2 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-bold uppercase tracking-widest border border-emerald-100 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+              Target Lock: Active
             </div>
           )}
         </div>
 
-        {/* Simple Instructions */}
-        <div className="p-4 bg-black/[0.01] border-l-2 border-black/5 flex items-start gap-4">
-          <Calendar size={14} className="text-black/20 mt-1" />
-          <p className="text-xs font-serif text-black/40 leading-relaxed italic">
-            Build your day by adding focus blocks. Once you're satisfied with your plan, lock it in to commit to your day.
-          </p>
-        </div>
-
-        {/* Momentum Bar - 200M App Feature */}
+        {/* Orbit Momentum */}
         {isLocked && totalCount > 0 && (
-          <div className="space-y-4 pt-4 animate-in fade-in slide-in-from-top-4 duration-700">
-            <div className="flex justify-between items-end">
-              <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/20">Daily Momentum</span>
-                <p className="text-2xl font-serif">Maximum Potential</p>
+          <div className="w-full space-y-4 pt-6 animate-in fade-in slide-in-from-top-4 duration-700">
+            <div className="flex justify-between items-end px-2">
+              <div className="text-left space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-300">Daily Trajectory</span>
+                <p className="text-xl font-serif text-[var(--text-primary)]">Orbit Stability</p>
               </div>
-              <span className="text-4xl font-serif text-black">{Math.round(momentum)}%</span>
+              <span className="text-4xl font-serif text-blue-500">{Math.round(momentum)}%</span>
             </div>
-            <div className="h-3 w-full momentum-bar">
+            <div className="h-2 w-full bg-gray-50 rounded-full overflow-hidden shadow-inner p-0.5">
               <div
-                className="momentum-fill"
+                className="h-full bg-blue-500 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all duration-1000 ease-out"
                 style={{ width: `${momentum}%` }}
               />
             </div>
@@ -104,19 +94,23 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
       </header>
 
       {/* Timeline */}
-      <div className="space-y-0.5">
+      <div className="space-y-1 relative">
+        <div className="absolute left-[2.25rem] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-100 to-transparent" />
+
         {hours.map(hour => {
           const timeString = `${hour.toString().padStart(2, '0')}:00`;
           const event = events.find(e => e.start === timeString);
+          const isActive = event && event.id === firstUncompletedId;
 
           return (
-            <div key={hour} className="group flex items-start py-6 border-b border-black/[0.03] transition-colors hover:border-black/5">
-              <div className="w-16 pt-0.5 text-[10px] font-bold text-black/20 font-mono tracking-tighter">
+            <div key={hour} className="group flex items-center py-5 transition-all relative">
+              <div className="w-16 text-[10px] font-bold text-gray-300 font-mono tabular-nums">
                 {timeString}
               </div>
-              <div className="flex-1 min-h-[1.5rem] relative">
+
+              <div className="flex-1 min-h-[3rem] ml-4">
                 {event ? (
-                  <div className="flex items-center justify-between group-hover:pl-2 transition-all">
+                  <div className={`p-4 rounded-2xl border transition-all flex items-center justify-between ${event.completed ? 'bg-gray-50/50 border-transparent opacity-60' : isActive ? 'bg-white border-blue-100 shadow-xl shadow-blue-500/5 -translate-y-0.5' : 'bg-white border-gray-50 shadow-sm'}`}>
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => {
@@ -125,26 +119,24 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
                           );
                           onUpdatePlan(newEvents);
                         }}
-                        className={`transition-all ${event.completed ? 'text-emerald-500' :
-                          event.id === firstUncompletedId ? 'text-black/40 hover:text-black hover:scale-110' : 'text-black/20 hover:text-black/40'}`}
+                        className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all ${event.completed ? 'bg-emerald-500 text-white' : isActive ? 'bg-blue-50 text-blue-500 ring-4 ring-blue-500/5' : 'bg-gray-50 text-gray-300 hover:bg-gray-100'}`}
                       >
-                        {event.completed ? <CheckCircle2 size={18} /> :
-                          event.id === firstUncompletedId ? <Zap size={18} className="animate-pulse" /> : <Circle size={18} />}
+                        {event.completed ? <Check size={14} /> : isActive ? <Zap size={14} className="animate-pulse" /> : <div className="w-1.5 h-1.5 bg-gray-200 rounded-full" />}
                       </button>
-                      <div className={`space-y-1 transition-all ${event.completed ? 'opacity-40 line-through' : ''}`}>
-                        <span className={`text-[9px] font-bold uppercase tracking-widest ${event.completed ? 'text-black/20' : 'text-black/40'}`}>{event.type}</span>
-                        <h4 className="text-lg font-serif text-black leading-none">{event.title}</h4>
+                      <div className="space-y-0.5">
+                        <span className={`text-[9px] font-bold uppercase tracking-widest ${event.completed ? 'text-gray-300' : 'text-blue-500/40'}`}>{event.type}</span>
+                        <h4 className={`text-lg font-serif ${event.completed ? 'text-gray-400 line-through' : 'text-[var(--text-primary)]'}`}>{event.title}</h4>
                       </div>
                     </div>
+
                     {!isLocked && (
                       <button
                         onClick={() => onUpdatePlan(planEvents.filter(e => e.id !== event.id))}
-                        className="p-2 text-black/10 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
+                        className="p-2 text-gray-100 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all"
                       >
                         <X size={14} />
                       </button>
                     )}
-                    {isLocked && !event.completed && <Lock size={12} className="text-black/5" />}
                   </div>
                 ) : !isLocked ? (
                   <button
@@ -152,13 +144,16 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
                       setNewEvent({ ...newEvent, start: timeString });
                       setIsAdding(true);
                     }}
-                    className="w-full text-left text-[10px] font-bold uppercase tracking-[0.2em] text-black/5 hover:text-black/40 transition-all py-1.5"
+                    className="w-full flex items-center gap-3 p-4 rounded-2xl border-2 border-dashed border-gray-50 text-[10px] font-bold uppercase tracking-widest text-gray-200 hover:border-blue-100 hover:text-blue-500 transition-all"
                   >
-                    + Add activity
+                    <Plus size={14} /> Assign Mission
                   </button>
                 ) : (
-                  <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/5 py-1.5 italic">
-                    Unallocated
+                  <div className="p-4 rounded-2xl border border-dotted border-gray-50 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-gray-50 flex items-center justify-center opacity-20">
+                      <Sparkles size={14} />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-100 italic">Clear Orbit Segment</span>
                   </div>
                 )}
               </div>
@@ -167,77 +162,78 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
         })}
       </div>
 
-      {/* Done with my Day Button - 200M App Feature */}
+      {/* Done with my Day Button */}
       {isLocked && (
-        <div className="pt-12 pb-24 border-t border-black/[0.03]">
+        <div className="pt-12 pb-24 border-t border-gray-50">
           <button
             onClick={handleCompleteDay}
-            className={`w-full py-8 rounded-[2rem] transition-all duration-700 group relative overflow-hidden flex items-center justify-center gap-6
+            className={`w-full py-8 rounded-[3rem] transition-all duration-700 group relative overflow-hidden flex items-center justify-center gap-6 shadow-2xl active:scale-[0.98]
               ${momentum === 100
-                ? 'bg-black text-white shadow-[0_20px_40px_rgba(0,0,0,0.2)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.3)]'
-                : 'bg-black/[0.02] border border-black/5 text-black hover:bg-black hover:text-white'}`}
+                ? 'bg-black text-white'
+                : 'bg-white border border-gray-100 text-black hover:bg-black hover:text-white'}`}
           >
             <div className="flex flex-col items-start text-left">
-              <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">Day Conclusion</span>
-              <span className="text-2xl font-serif">Secure Day Momentum</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">Flight Conclusion</span>
+              <span className="text-2xl font-serif">Secure Flight Path</span>
             </div>
             <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
 
             {momentum === 100 && (
               <div className="absolute top-4 right-8">
-                <Star size={16} fill="currentColor" className="text-emerald-400 animate-bounce" />
+                <Sparkles size={20} className="text-blue-400 animate-bounce" />
               </div>
             )}
           </button>
         </div>
       )}
 
-      {/* Add Objective Modal */}
+      {/* Add Time Block Modal */}
       {isAdding && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
-          <div className="w-full max-w-sm space-y-12">
-            <header className="space-y-4">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">Add to Schedule</span>
-              <h3 className="text-4xl font-serif">Time Block</h3>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-white/95 backdrop-blur-md">
+          <div className="w-full max-w-sm space-y-12 animate-in fade-in zoom-in-95">
+            <header className="text-center space-y-4">
+              <div className="w-16 h-16 mx-auto bg-blue-500 text-white rounded-[1.5rem] flex items-center justify-center shadow-xl shadow-blue-500/20">
+                <Calendar size={24} />
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-4xl font-serif">Mission Block</h3>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Set a specific target for {newEvent.start}</p>
+              </div>
             </header>
 
-            <form onSubmit={handleAddStringEvent} className="space-y-12">
+            <form onSubmit={handleAddStringEvent} className="space-y-10">
               <div className="space-y-8">
-                <div className="space-y-2">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">Activity</span>
+                <div className="space-y-2 text-center">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Mission Name</span>
                   <input
                     autoFocus
                     value={newEvent.title}
                     onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-                    placeholder="Deep Focus / Strategic Review"
-                    className="w-full bg-transparent text-2xl font-serif border-none outline-none placeholder:text-black/5"
+                    placeholder="Fetch Deep Work"
+                    className="w-full bg-transparent text-3xl font-serif border-none outline-none placeholder:text-gray-100 text-center"
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-12">
-                  <div className="space-y-2">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">Classification</span>
-                    <select
-                      value={newEvent.type}
-                      onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })}
-                      className="w-full bg-transparent text-sm font-serif border-none outline-none appearance-none cursor-pointer"
-                    >
-                      <option value="deep-work">Deep Work</option>
-                      <option value="logistics">Logistics</option>
-                      <option value="recovery">Recovery</option>
-                    </select>
+                <div className="space-y-2 text-center">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-300">Classification</span>
+                  <div className="flex gap-2 justify-center">
+                    {['mission', 'logistics', 'recovery'].map(type => (
+                      <button
+                        key={type}
+                        type="button"
+                        onClick={() => setNewEvent({ ...newEvent, type })}
+                        className={`px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${newEvent.type === type ? 'bg-blue-500 text-white shadow-lg' : 'bg-gray-50 text-gray-400'}`}
+                      >
+                        {type}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-12">
-                <button type="button" onClick={() => setIsAdding(false)} className="text-[10px] font-bold uppercase tracking-widest text-black/30 hover:text-black">Cancel</button>
-                <button
-                  type="submit"
-                  className="px-8 py-3 bg-black text-white rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-gray-900 transition-all"
-                >
-                  Save activity
-                </button>
+              <div className="flex flex-col gap-4">
+                <button type="submit" className="w-full py-5 bg-black text-white rounded-3xl font-bold uppercase tracking-widest shadow-2xl active:scale-[0.98]">Assign to Orbit</button>
+                <button type="button" onClick={() => setIsAdding(false)} className="text-[10px] font-bold uppercase tracking-widest text-gray-300 hover:text-black transition-colors">Cancel</button>
               </div>
             </form>
           </div>
@@ -246,3 +242,9 @@ export const Plan: React.FC<PlanProps> = ({ user, planEvents = [], onUpdatePlan 
     </div>
   );
 };
+
+const Check = ({ size, className }: { size: number, className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);

@@ -1,7 +1,8 @@
 import React from 'react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, CartesianGrid } from 'recharts';
 import { DailyRecord } from '../types';
-import { Lock } from 'lucide-react';
+import { SparklesBold as Sparkles, BarChart2 } from '../lib/icons';
+import { DogBuddy } from '../components/DogBuddy';
 
 interface AnalyticsProps {
   history: DailyRecord[];
@@ -24,64 +25,68 @@ export const Analytics: React.FC<AnalyticsProps> = ({ history, user }) => {
     : 0;
 
   return (
-    <div className="min-h-screen p-6 pb-32 max-w-xl mx-auto space-y-16">
+    <div className="min-h-screen p-6 pb-32 max-w-2xl mx-auto space-y-12 animate-fade-in font-sans">
       {/* Header */}
-      <header className="pt-12 space-y-4">
+      <header className="pt-8 flex flex-col items-center text-center space-y-6">
+        <DogBuddy mood="happy" size={140} className="drop-shadow-xl" />
         <div className="space-y-1">
-          <h1 className="text-4xl font-serif text-black -tracking-wide">Trends</h1>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/20">Your progress over time</p>
-        </div>
-
-        {/* Simple Instructions */}
-        <div className="p-4 bg-black/[0.01] border-l-2 border-black/5">
-          <p className="text-xs font-serif text-black/40 leading-relaxed italic">
-            Analyze your momentum flux to see where you're excelling and where you can improve.
-          </p>
+          <h1 className="text-4xl font-serif text-[var(--text-primary)]">Signals</h1>
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-500/40">Analyzing your flight data.</p>
         </div>
       </header>
 
       {/* Primary Metrics */}
-      <section className="grid grid-cols-2 gap-12 border-b border-black/5 pb-12">
-        <div className="space-y-1">
-          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/20">Average Score</span>
-          <div className="flex items-baseline gap-2">
-            <span className="text-5xl font-serif text-black tracking-tighter">{avgScore}</span>
-            <span className="text-xs font-bold text-[var(--accent)]">Stable</span>
+      <section className="grid grid-cols-2 gap-8 bg-white p-8 rounded-[3rem] border border-gray-50 shadow-sm relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none group-hover:scale-110 transition-transform duration-1000">
+          <BarChart2 size={120} />
+        </div>
+
+        <div className="space-y-2 relative">
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-300">Mean Velocity</span>
+          <div className="flex items-baseline gap-3">
+            <span className="text-6xl font-serif text-[var(--text-primary)] tracking-tighter">{avgScore}</span>
+            <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">Stable</span>
           </div>
         </div>
-        <div className="text-right space-y-1">
-          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/20">Potential Target</span>
+        <div className="text-right space-y-2 relative">
+          <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-300">Next Peak</span>
           <div className="flex items-baseline gap-2 justify-end">
-            <span className="text-3xl font-serif text-black/30">{Math.max(avgScore + 15, 88)}</span>
+            <span className="text-4xl font-serif text-gray-200">{Math.max(avgScore + 12, 90)}</span>
           </div>
         </div>
       </section>
 
       {/* Chart */}
-      <section className="space-y-8">
-        <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/30 text-center">Growth Chart</h2>
+      <section className="space-y-8 bg-white p-8 rounded-[3rem] border border-gray-50 shadow-sm">
+        <div className="flex items-center justify-between px-2">
+          <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Momentum Flux</h2>
+          <Sparkles size={16} className="text-blue-500/40" />
+        </div>
+
         <div className="h-[250px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <defs>
                 <linearGradient id="scoreGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#000" stopOpacity={0.03} />
-                  <stop offset="100%" stopColor="#000" stopOpacity={0} />
+                  <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.15} />
+                  <stop offset="100%" stopColor="#3B82F6" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="4 4" stroke="#000" vertical={false} strokeOpacity={0.05} />
+              <CartesianGrid strokeDasharray="10 10" stroke="#E5E7EB" vertical={false} />
               <XAxis
                 dataKey="name"
-                stroke="transparent"
-                tick={{ fontSize: 9, fontWeight: 'bold', fill: 'rgba(0,0,0,0.2)' }}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fontSize: 10, fontWeight: 'bold', fill: '#9CA3AF' }}
+                dy={10}
               />
               <Area
                 type="monotone"
                 dataKey="score"
-                stroke="#000"
-                strokeWidth={2}
+                stroke="#3B82F6"
+                strokeWidth={4}
                 fill="url(#scoreGradient)"
-                animationDuration={1500}
+                animationDuration={2000}
               />
             </AreaChart>
           </ResponsiveContainer>
@@ -91,22 +96,26 @@ export const Analytics: React.FC<AnalyticsProps> = ({ history, user }) => {
       {/* Reflection History */}
       {history.length > 0 && (
         <section className="space-y-8">
-          <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-black/30">Past Reflections</h2>
+          <div className="flex items-center justify-between px-2">
+            <h2 className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">Flight Archive</h2>
+          </div>
+
           <div className="space-y-4">
             {history.slice(0, 5).map((record, i) => (
-              <div key={i} className="flex items-start justify-between py-6 border-b border-black/[0.03] group">
-                <div className="space-y-2 flex-1 pr-8">
+              <div key={i} className="flex items-start justify-between p-8 bg-white rounded-[2.5rem] border border-gray-50 hover:border-blue-100 transition-all group shadow-sm">
+                <div className="space-y-3 flex-1 pr-8">
                   <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/20">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-500/40">
                       {new Date(record.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     </span>
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-600/60">Verified</span>
+                    <div className="w-1 h-1 rounded-full bg-blue-500/20" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-500/60 bg-emerald-50 px-2 py-0.5 rounded-full">Verified</span>
                   </div>
-                  <p className="text-sm font-serif text-black/60 italic leading-relaxed group-hover:text-black transition-colors">
+                  <p className="text-base font-serif text-gray-500 italic leading-relaxed group-hover:text-[var(--text-primary)] transition-colors">
                     "{record.reflection || "No data logged."}"
                   </p>
                 </div>
-                <div className="text-2xl font-serif text-black/10 group-hover:text-black transition-colors">
+                <div className="text-4xl font-serif text-gray-100 group-hover:text-blue-500 transition-all duration-500 tabular-nums">
                   {record.score || record.productivityScore}
                 </div>
               </div>
